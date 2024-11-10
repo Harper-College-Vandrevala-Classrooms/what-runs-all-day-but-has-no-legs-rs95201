@@ -1,27 +1,46 @@
 #include <iostream>
 #include "time.hpp"
 
-void Timer::start()
+Timer::Timer() : start(0), stop(0), elapsed(0), is_running(false) {}
+
+void Timer::start_time()
 {
-    time_t start_time = time(nullptr);  
+    if (!is_running)
+    {
+        start = time(nullptr);  
+        is_running = true;
+    }
 }
 
-void Timer::stop()
+void Timer::stop_time()
 {
-    time_t end_time = time(nullptr); 
+    if (is_running)
+    {
+        stop = time(nullptr);  
+        is_running = false;    
+    }
+    else
+    {
+        std::cout << "Error: The timer has not been started!" << std::endl;
+        exit(EXIT_FAILURE);  
+    }
 }
 
-double Timer::elapsed()
+time_t Timer::elapsed_time() 
 {
-    return difftime(end_time, start_time);
+    if (!is_running)
+    {
+        elapsed = stop - start;  
+    }
+    return elapsed;  
 }
 
-void Timer::get_the_system_time()
+void Timer::get_the_system_time() const
 {
     constexpr short sec_per_min = 60,
                   min_per_hour = 60,
-                    sec_per_hour = sec_per_min * min_per_hour, 
-                    hrs_per_day = 24;
+                  sec_per_hour = sec_per_min * min_per_hour, 
+                  hrs_per_day = 24;
     constexpr long sec_per_day = static_cast<long>(sec_per_hour) * hrs_per_day;
 
     long sec_today = time(nullptr) % sec_per_day;
@@ -31,7 +50,7 @@ void Timer::get_the_system_time()
           min = sec_not_hour / sec_per_min,
           sec = sec_not_hour % sec_per_min;
 
-    std::cout << "The time now is " << hour << ':';
+    std::cout << hour << ':';
     std::cout.fill('0');
     std::cout.width(2);
     std::cout << min << ':';
@@ -39,15 +58,7 @@ void Timer::get_the_system_time()
     std::cout << sec << ".\n";
 }
 
-void Timer::wait_for_a_few_seconds()
+void Timer::wait_for_few_seconds()
 {
-    time_t wait_until = time(nullptr) + 5; 
-    while (time(nullptr) < wait_until)
-    {
-    }
-}
-
-double Timer::compare_the_times()
-{
-    return difftime(end_time, start_time);
+    std::this_thread::sleep_for(std::chrono::seconds(3)); 
 }
