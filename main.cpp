@@ -1,3 +1,6 @@
+#include <iostream>
+#include <cassert>
+#include "time.hpp"
 int main()
 {
     Timer timer;
@@ -5,13 +8,13 @@ int main()
     timer.start_time();
     std::cout << "Started Timer" << std::endl;
 
-    long system_time_starts = timer.get_the_systemTime();
+    long system_time_starts = timer.get_the_system_time();
     std::cout << "System time at start: " << system_time_starts << std::endl;
 
     timer.wait_for_few_seconds();  
     timer.stop_time(); 
     std::cout << "Stopped Timer" << std::endl;
-    long system_time_stops = timer.get_the_systemTime(); 
+    long system_time_stops = timer.get_the_system_time(); 
     std::cout << "System time at stop: " << system_time_stops << std::endl;
     long compare = system_time_stops - system_time_starts;
     std::cout << "Time difference (system time): " << compare << " seconds" << std::endl;
