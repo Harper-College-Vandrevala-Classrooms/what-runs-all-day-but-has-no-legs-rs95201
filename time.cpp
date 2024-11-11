@@ -1,6 +1,7 @@
 #include <iostream>
+#include <chrono>
+#include <thread>
 #include "time.hpp"
-
 Timer::Timer() : start(0), stop(0), elapsed(0), is_running(false) {}
 
 void Timer::start_time()
