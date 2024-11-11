@@ -1,6 +1,7 @@
 #include <iostream>
 #include <cassert>
 #include "time.hpp"
+
 int main()
 {
     Timer timer;
