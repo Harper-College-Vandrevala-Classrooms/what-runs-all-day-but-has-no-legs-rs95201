@@ -9,7 +9,6 @@ private:
 
 public:
     Timer();
-
     void start_time();  
     void stop_time();   
     time_t elapsed_time();
